@@ -210,9 +210,13 @@ vector<int> solveAll(vector<vector<vector<int> > >& people, vector<int>& solutio
 
 		if (test(people, solution))
 		{
-
+			cout << "Found solution!" << endl;
+			return solution;
 		}
 	}
+
+	cout << "IMPOSSIBLE!!" << endl;
+	return vector<int>();
 }
 
 int countMinusOnes(vector<int>& v)
@@ -257,7 +261,11 @@ string solve(vector<vector<vector<int> > >& people, int numFlavours)
 		// try all possibilities
 		solution = solveAll(people, solution);
 	}
-	//print(people);
+
+	if (solution.size() == 0)
+	{
+		return "IMPOSSIBLE";
+	}
 
 	ostringstream result;
 	for (int i = 0; i < numFlavours; ++i)
@@ -270,14 +278,18 @@ string solve(vector<vector<vector<int> > >& people, int numFlavours)
 
 
 int main() {
-	string filename = "/home/thomas/Downloads/B-small-practice.in";
+	//string filename = "/home/thomas/Downloads/B-small-practice.in";
+	string filename = "/home/thomas/Downloads/B-large-practice.in";
 	string filename2 = "/home/thomas/milkshakes";
+	string outName = "/home/thomas/B-small-practice.out";
+	ofstream outFile(outName.c_str());
 	ifstream infile(filename.c_str());
 	int tests;
 	infile >> tests;
 	cout << "Number Tests: " << tests << endl;
 
 	int numFlavours, numPeople;
+	int c = 0;
 	while (infile >> numFlavours >> numPeople)
 	{
 		cout << "Flavours: " << numFlavours << ", people: " << numPeople << endl;
@@ -304,11 +316,13 @@ int main() {
 		}
 
 		string solution = solve(people, numFlavours);
+		c++;
+		outFile << "Case #" << c << ": " << solution << endl;
 		cout << "Solution: " << solution << endl;
 		//print(people);
 	}
 
-
+	outFile.close();
 	cout << "End" << endl; // prints !!!Hello World!!!
 	return 0;
 }
